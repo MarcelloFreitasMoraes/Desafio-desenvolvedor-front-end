@@ -1,5 +1,11 @@
-export const API = `https://mercado-de-fruta2-default-rtdb.firebaseio.com/frutas/list.json`
+import axios from 'axios'
 
-export const CHECK = `https://mercado-de-fruta2-default-rtdb.firebaseio.com/frutas/checkout.json`
+export const API = `${process.env.NEXT_PUBLIC_API_URL}/frutas/list.json`
 
-export const CHECKOUT = `https://mercado-de-fruta2-default-rtdb.firebaseio.com/frutas/checkout`
+export const CHECK = `${process.env.NEXT_PUBLIC_API_URL}/frutas/checkout.json`
+
+export const CHECKOUT = `${process.env.NEXT_PUBLIC_API_URL}/frutas/checkout`
+
+export const http = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+})

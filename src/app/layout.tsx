@@ -5,6 +5,8 @@ import ClientThemeProvider from './ClientThemeProvider'
 import { BaseLayout } from '@/components'
 import './globals.css'
 import StyledComponentsRegistry from './StyledComponentsRegistry'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/utils/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,12 +23,14 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                <StyledComponentsRegistry>
-                    <ClientThemeProvider>
-                        <GlobalStyle />
-                        <BaseLayout>{children}</BaseLayout>
-                    </ClientThemeProvider>
-                </StyledComponentsRegistry>
+                <QueryClientProvider client={queryClient}>
+                    <StyledComponentsRegistry>
+                        <ClientThemeProvider>
+                            <GlobalStyle />
+                            <BaseLayout>{children}</BaseLayout>
+                        </ClientThemeProvider>
+                    </StyledComponentsRegistry>
+                </QueryClientProvider>
             </body>
         </html>
     )

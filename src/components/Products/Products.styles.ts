@@ -3,7 +3,7 @@
 import styled from 'styled-components'
 
 export const Content = styled.div`
-    margin: 4% auto;
+    margin: 50px auto;
 `
 export const Grid = styled.div`
     display: flex;
@@ -19,24 +19,25 @@ export const Grid = styled.div`
 `
 
 export const Box = styled.div`
-    width: 33.33%;
-    max-width: 300px;
+    width: 250px;
+    height: 400px;
+    max-width: 250px;
     text-align: center;
-    background-color: white;
+    background-color: ${(props) => props.theme.colors.white};
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease-out;
+
     img {
         margin-bottom: 10px;
     }
 
-    p {
-        margin: 10px 0;
+    h2::first-letter {
+        text-transform: uppercase;
     }
 
-    :hover {
-        transition: all 0.3s ease-out;
-        transform: scale(1.05);
+    p {
+        margin: 10px 0;
     }
 
     @media screen and (max-width: 768px) {
