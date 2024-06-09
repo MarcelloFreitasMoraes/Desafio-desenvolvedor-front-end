@@ -11,4 +11,14 @@ export const ContainerCard = styled.div`
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     width: 100%;
+
+    @media screen and (max-width: 1200px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    @media screen and (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 475px) {
+        grid-template-columns: repeat(1, 1fr);
+    }
 `

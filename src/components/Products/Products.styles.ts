@@ -9,6 +9,9 @@ export const Grid = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    width: 250px;
+    height: 400px;
+    max-width: 250px;
 
     @media screen and (max-width: 768px) {
         justify-content: flex-start;
@@ -19,9 +22,9 @@ export const Grid = styled.div`
 `
 
 export const Box = styled.div`
-    width: 250px;
-    height: 400px;
-    max-width: 250px;
+    width: 100%;
+    height: auto;
+
     text-align: center;
     background-color: ${(props) => props.theme.colors.white};
     border-radius: 10px;
@@ -41,11 +44,8 @@ export const Box = styled.div`
     }
 
     @media screen and (max-width: 768px) {
-        width: 50%;
-    }
-
-    @media screen and (max-width: 744px) {
         width: 100%;
+        padding: 0 20px;
     }
 `
 
@@ -56,5 +56,9 @@ export const Pricing = styled.div`
 
     sup {
         font-size: 0.5em;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 1.5rem;
     }
 `

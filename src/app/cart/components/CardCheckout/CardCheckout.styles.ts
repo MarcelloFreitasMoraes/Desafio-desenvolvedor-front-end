@@ -6,7 +6,7 @@ export const Grid = styled.div`
     justify-content: space-between;
     display: flex;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 900px) {
         flex-direction: column;
     }
 `
@@ -20,7 +20,7 @@ export const Content = styled.section`
     margin-bottom: 20px;
     position: relative;
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 600px) {
         flex-direction: column;
         height: 100%;
     }
@@ -32,7 +32,6 @@ export const Wrapper = styled.div`
 `
 
 export const Product = styled.div`
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
     padding-right: 20px;
     display: flex;
     align-items: center;
@@ -45,7 +44,6 @@ export const Product = styled.div`
     }
 
     @media screen and (max-width: 768px) {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
         padding: 0 20px;
 
         img {
@@ -75,6 +73,10 @@ export const Heading = styled.div`
 
     h1 {
         text-align: center;
+
+        @media screen and (max-width: 768px) {
+            font-size: 1.5rem;
+        }
     }
 
     h2 {
@@ -88,7 +90,7 @@ export const Heading = styled.div`
 export const Price = styled.span`
     position: absolute;
     bottom: 40px;
-    color: #9e9e9e;
+    color: ${(props) => props.theme.colors.textLight};
     font-size: 2em;
     font-weight: bolder;
 
@@ -131,7 +133,7 @@ export const Buttons = styled.div`
         padding: 0 5px;
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 600px) {
         position: relative;
         left: 5px;
     }
@@ -142,6 +144,7 @@ export const Aside = styled.aside`
     height: 100%;
     padding: 18px;
     border-radius: 10px;
+    margin-bottom: 50px;
 
     @media screen and (max-width: 768px) {
         width: 100%;
@@ -157,9 +160,13 @@ export const ListProducts = styled.ul`
     margin: 10px 0;
 
     li {
-        color: #9e9e9e;
+        color: ${(props) => props.theme.colors.textLight};
         font-size: 0.8em;
     }
+
+    /* span::first-letter {
+        text-transform: uppercase;
+    } */
 
     sup {
         font-size: 0.5em;

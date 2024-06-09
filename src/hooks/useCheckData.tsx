@@ -15,9 +15,7 @@ export default function useCartData(id?: string | string[] | undefined) {
         () =>
             http
                 .get(`/frutas/checkout.json`)
-                .then((res) => {
-                    return res?.data || {}
-                })
+                .then((res) => res?.data || {})
                 .catch((error) => console.log(error)),
         {
             staleTime: stale.never,
@@ -28,33 +26,39 @@ export default function useCartData(id?: string | string[] | undefined) {
 
     const mutation = useMutation(
         (values: IMovieCart) => {
-            const filtered =
-                query.data && Object.values(query.data).filter((item) => item)
-
-            const existingItemKey = Object.keys(query.data || {}).find(
-                (key) => key
+            const existingEntries = query.data ? Object.entries(query.data) : []
+            const existingEntry = existingEntries.find(
+                ([_, item]) => item.id === values.id
             )
 
-            if (!values.delete) {
-                if (!existingItemKey) {
+            if (values.delete) {
+                console.log('DELETE')
+                return http.delete(
+                    `/frutas/checkout/${
+                        existingEntry ? existingEntry[0] : id
+                    }.json`
+                )
+            } else {
+                if (existingEntry) {
+                    console.log('PUT')
+                    const [key, existingItem] = existingEntry
+                    const updatedValues = {
+                        ...values,
+                        amount: existingItem.amount + 1,
+                        total: (
+                            parseFloat(existingItem.price) *
+                            (existingItem.amount + 1)
+                        ).toFixed(2),
+                    }
+                    return http.put(
+                        `/frutas/checkout/${key}.json`,
+                        updatedValues
+                    )
+                } else {
                     console.log('POST')
                     const body = { ...values, amount: 1 }
                     return http.post(`/frutas/checkout.json`, body)
-                } else {
-                    console.log('PUT')
-                    const updatedValues = {
-                        ...values,
-                        amount: filtered?.[0]?.amount + 1,
-                        total: filtered?.[0]?.ttoal * filtered?.[0]?.amount,
-                    }
-                    return http.put(
-                        `/frutas/checkout/${existingItemKey}.json`,
-                        updatedValues
-                    )
                 }
-            } else {
-                console.log('DELETE')
-                return http.delete(`/frutas/checkout/${id}.json`)
             }
         },
         {

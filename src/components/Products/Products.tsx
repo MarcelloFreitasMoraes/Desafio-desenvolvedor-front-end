@@ -2,10 +2,8 @@
 
 import Button from '../Button/Button'
 import { Box, Content, Grid, Pricing } from './Products.styles'
-// import Checked from '../Checked'
 import { ProdutoctsProps } from './types'
 import Image from 'next/image'
-// import { CHECK } from '@/config/api'
 
 const Products: React.FC<ProdutoctsProps> = ({
     image,

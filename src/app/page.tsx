@@ -41,7 +41,6 @@ export default function Home() {
                     Object.entries(ListProductsQuery).map(
                         ([_, productsArray]) =>
                             productsArray.map((product: IMovieCart) => {
-                                const amount = product.amount ?? 0
                                 return (
                                     <Fragment key={product.id}>
                                         <Products
@@ -54,7 +53,6 @@ export default function Home() {
                                             onClick={() =>
                                                 CartMutation.mutate({
                                                     ...product,
-                                                    amount: amount + 1,
                                                 })
                                             }
                                         />
