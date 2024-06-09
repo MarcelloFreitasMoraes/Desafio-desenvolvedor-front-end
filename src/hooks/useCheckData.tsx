@@ -2,13 +2,10 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { IMovieCart } from './types'
-import { http } from '@/service/http'
-import { useMovieStore } from './stores/useMovieStore'
+import { http } from '@/config/http'
 import stale from '@/utils/stale'
 
 export default function useCartData(key?: string | string[] | undefined) {
-    const { setMoviesInCart, showToast, moviesInCart } = useMovieStore()
-
     const query = useQuery<IMovieCart | undefined>(
         [['cartMovies'], key],
         () =>

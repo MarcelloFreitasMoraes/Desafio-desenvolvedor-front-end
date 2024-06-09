@@ -14,8 +14,8 @@ export const Container = styled.div`
     align-items: center;
     text-align: center;
 
-    p {
-        color: ${(props) => props.theme.colors.secundary};
+    button {
+        width: 170px;
     }
 `
 export const ImageBox = styled.div`

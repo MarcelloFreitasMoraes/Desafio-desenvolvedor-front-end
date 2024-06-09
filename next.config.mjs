@@ -3,6 +3,9 @@ const nextConfig = {
     experimental: {
         swcLoader: true,
     },
+    compiler: {
+        styledComponents: true,
+    },
     images: {
         domains: [
             'hortifrutijardins.com.br',

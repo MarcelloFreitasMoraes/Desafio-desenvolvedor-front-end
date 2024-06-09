@@ -25,8 +25,8 @@ const CardPrice: React.FC<DataPriceProps> = ({
 
             {data &&
                 Object.entries(data)?.map(
-                    ([_, products]: [string, IMovieCart]) => (
-                        <React.Fragment key={products?.id}>
+                    ([_, products]: [string, IMovieCart], index) => (
+                        <React.Fragment key={`product_${index}`}>
                             <Items>
                                 <ListProducts>
                                     <li>
@@ -54,6 +54,7 @@ const CardPrice: React.FC<DataPriceProps> = ({
                         </React.Fragment>
                     )
                 )}
+
             <Finish>
                 <Total>
                     <h3>Total: </h3>

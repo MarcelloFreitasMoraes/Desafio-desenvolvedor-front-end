@@ -15,7 +15,6 @@ import { DataProps } from './types'
 import CardPrice from './CardPrice'
 import useCartData from '@/hooks/useCheckData'
 import { IMovieCart } from '@/hooks/types'
-import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 const CardCheckout: React.FC<DataProps> = ({ data }) => {
     const { CartMutation } = useCartData()
@@ -35,19 +34,16 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
             <Wrapper>
                 {data &&
                     Object.entries(data).map(
-                        ([key, fruit]: [string, IMovieCart]) => {
+                        ([key, fruit]: [string, IMovieCart], index) => {
                             const amount = fruit?.amount ?? 1
                             const totalPrice =
                                 amount > 1 ? fruit?.total : fruit?.price
+
                             return (
-                                <Content key={fruit?.id}>
+                                <Content key={`product_${index}`}>
                                     <Product>
                                         <Image
-                                            src={
-                                                fruit?.image as
-                                                    | string
-                                                    | StaticImport
-                                            }
+                                            src={fruit?.image as string}
                                             alt={fruit?.name as string}
                                             width={250}
                                             height={200}
@@ -93,6 +89,7 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
                         }
                     )}
             </Wrapper>
+
             <CardPrice
                 data={data}
                 fruitsSelected={undefined}

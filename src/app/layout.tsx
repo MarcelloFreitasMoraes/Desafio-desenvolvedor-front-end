@@ -24,8 +24,8 @@ export default function RootLayout({
         <html lang="en">
             <body className={inter.className}>
                 <QueryClientProvider client={queryClient}>
-                    <StyledComponentsRegistry>
-                        <ClientThemeProvider>
+                    <StyledComponentsRegistry key="styled-components-registry">
+                        <ClientThemeProvider key="client-theme-provider">
                             <GlobalStyle />
                             <BaseLayout>{children}</BaseLayout>
                         </ClientThemeProvider>
