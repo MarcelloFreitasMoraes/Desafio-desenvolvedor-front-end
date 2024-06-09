@@ -13,7 +13,9 @@ const Header: React.FC = () => {
         <Content>
             <Container>
                 <Grid>
-                    <Image src={Logo} alt="logo" />
+                    <Link href={'/'}>
+                        <Image src={Logo} alt="logo" />
+                    </Link>
                     <Box>
                         <Link href={'/'}>Home</Link>
                         <Link href={'#'}>Ofertas</Link>

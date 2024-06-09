@@ -1,12 +1,19 @@
 import { useState, useEffect } from 'react'
 
-export const useWindowResize = (): boolean => {
+export const useWindowResize = (
+    breakpoint = 767,
+    isLessThan = false
+): boolean => {
     const [showArrows, setShowArrows] = useState<boolean>(true)
 
     useEffect(() => {
         const handleResize = () => {
             const screenWidth = window.innerWidth
-            setShowArrows(screenWidth > 767)
+            if (isLessThan) {
+                setShowArrows(screenWidth < breakpoint)
+            } else {
+                setShowArrows(screenWidth > breakpoint)
+            }
         }
 
         window.addEventListener('resize', handleResize)
@@ -15,7 +22,7 @@ export const useWindowResize = (): boolean => {
         return () => {
             window.removeEventListener('resize', handleResize)
         }
-    }, [])
+    }, [breakpoint, isLessThan])
 
     return showArrows
 }

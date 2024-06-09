@@ -41,6 +41,10 @@ export default function Home() {
                     Object.entries(ListProductsQuery).map(
                         ([_, productsArray]) =>
                             productsArray.map((product: IMovieCart) => {
+                                const totalSun =
+                                    product.price?.toLocaleString('pt-BR', {
+                                        minimumFractionDigits: 2,
+                                    }) ?? 0
                                 return (
                                     <Fragment key={product.id}>
                                         <Products
@@ -49,7 +53,7 @@ export default function Home() {
                                             description={
                                                 product.description || ''
                                             }
-                                            price={product.price || ''}
+                                            price={totalSun}
                                             onClick={() =>
                                                 CartMutation.mutate({
                                                     ...product,

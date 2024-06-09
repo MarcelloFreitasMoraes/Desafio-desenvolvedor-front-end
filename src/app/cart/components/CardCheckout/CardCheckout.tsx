@@ -1,77 +1,103 @@
 import React, { useEffect } from 'react'
 import Image from 'next/image'
 import {
-    Aside,
     Buttons,
     Content,
     Detail,
-    Finish,
     Grid,
     Heading,
-    Items,
-    ListProducts,
     Price,
     Product,
-    Total,
     Wrapper,
 } from './CardCheckout.styles'
 import { FaTrash } from 'react-icons/fa'
-import { ListData } from '@/hooks/types'
 import { DataProps } from './types'
 import CardPrice from './CardPrice'
+import useCartData from '@/hooks/useCheckData'
+import { IMovieCart } from '@/hooks/types'
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 const CardCheckout: React.FC<DataProps> = ({ data }) => {
-    const fruitsSelected = []
-    const total = 0
-    // const prices = data &&
-    // Object.entries(data)?.map((som: { price: string }) => {
-    //     return parseFloat(som?.price?.replace(',', '.'))
-    // })
+    const { CartMutation } = useCartData()
 
-    // const totalCheckout = prices?.reduce((acumulado: number, x: number) => {
-    //     return acumulado + x
-    // }, 0)
-
-    // const total = totalCheckout?.toString().replace('.', ',')
+    const total =
+        data &&
+        Object.values(data)?.reduce(
+            (sum, item) => sum + parseFloat(item.total),
+            0
+        )
+    const totalSun = total?.toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+    })
 
     return (
         <Grid>
             <Wrapper>
                 {data &&
-                    Object.entries(data)?.map((fruit) => (
-                        <Content key={fruit[1]?.id}>
-                            <Product>
-                                <Image
-                                    src={fruit[1]?.image}
-                                    alt={fruit[1]?.name}
-                                    width={250}
-                                    height={200}
-                                />
-                            </Product>
+                    Object.entries(data).map(
+                        ([key, fruit]: [string, IMovieCart]) => {
+                            const amount = fruit?.amount ?? 1
+                            const totalPrice =
+                                amount > 1 ? fruit?.total : fruit?.price
+                            return (
+                                <Content key={fruit?.id}>
+                                    <Product>
+                                        <Image
+                                            src={
+                                                fruit?.image as
+                                                    | string
+                                                    | StaticImport
+                                            }
+                                            alt={fruit?.name as string}
+                                            width={250}
+                                            height={200}
+                                        />
+                                    </Product>
 
-                            <Detail>
-                                <Heading>
-                                    <h2>{fruit[1]?.name}</h2>
-                                    <p>{fruit[1]?.description}</p>
-                                </Heading>
+                                    <Detail>
+                                        <Heading>
+                                            <h2>{fruit?.name}</h2>
+                                            <p>{fruit?.description}</p>
+                                        </Heading>
 
-                                <Price>
-                                    <sup>R$</sup>
-                                    <span>{fruit[1]?.price}</span>
-                                </Price>
+                                        <Price>
+                                            <sup>R$</sup>
+                                            <span>
+                                                {totalPrice?.toLocaleString(
+                                                    'pt-BR',
+                                                    {
+                                                        minimumFractionDigits: 2,
+                                                    }
+                                                )}
+                                            </span>
+                                        </Price>
 
-                                <Buttons>
-                                    <span>Quantidade:</span>
-                                    <span>{fruit[1]?.amount}</span>
-                                    <span onClick={() => {}}>
-                                        <FaTrash size={16} />
-                                    </span>
-                                </Buttons>
-                            </Detail>
-                        </Content>
-                    ))}
+                                        <Buttons>
+                                            <span>Quantidade:</span>
+                                            <span>{fruit?.amount}</span>
+                                            <span
+                                                onClick={() =>
+                                                    CartMutation.mutate({
+                                                        key,
+                                                        delete: true,
+                                                        ...fruit,
+                                                    })
+                                                }
+                                            >
+                                                <FaTrash size={16} />
+                                            </span>
+                                        </Buttons>
+                                    </Detail>
+                                </Content>
+                            )
+                        }
+                    )}
             </Wrapper>
-            <CardPrice data={data} fruitsSelected={undefined} total={''} />
+            <CardPrice
+                data={data}
+                fruitsSelected={undefined}
+                total={totalSun}
+            />
         </Grid>
     )
 }

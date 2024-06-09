@@ -164,9 +164,9 @@ export const ListProducts = styled.ul`
         font-size: 0.8em;
     }
 
-    /* span::first-letter {
-        text-transform: uppercase;
-    } */
+    .uper {
+        text-transform: capitalize;
+    }
 
     sup {
         font-size: 0.5em;

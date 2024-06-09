@@ -1,18 +1,19 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
 import Back from '@/components/Back'
 import useCartData from '@/hooks/useCheckData'
-import { Container, Error, Loading } from '@/components'
+import { Container, Loading } from '@/components'
 import CardCheckout from './components/CardCheckout/CardCheckout'
+import Logo from '../../../public/not-product.png'
+import Mobile from '../../../public/not-product-mobile.png'
+import Empty from '@/components/Empty/Empty'
+import { useWindowResize } from '@/utils/useWindowResize'
 
 const Cart: React.FC = () => {
     const { CartQuery, LoadingCart } = useCartData()
-
-    if (Array.isArray(CartQuery?.data) && CartQuery?.data.length < 0) {
-        return <Error />
-    }
+    const showArrows = useWindowResize(768, true)
+    const Image = showArrows ? Mobile : Logo
 
     if (LoadingCart) {
         return <Loading />
@@ -20,7 +21,14 @@ const Cart: React.FC = () => {
 
     return (
         <Container>
-            <CardCheckout data={CartQuery?.data} />
+            {CartQuery?.data && Object.keys(CartQuery.data).length > 0 ? (
+                <CardCheckout data={CartQuery?.data} />
+            ) : (
+                <Empty
+                    image={Image}
+                    title="Parece que não há nada por aqui :("
+                />
+            )}
             <Back />
         </Container>
     )

@@ -25,13 +25,15 @@ const CardPrice: React.FC<DataPriceProps> = ({
 
             {data &&
                 Object.entries(data)?.map(
-                    ([id, products]: [string, IMovieCart]) => (
+                    ([_, products]: [string, IMovieCart]) => (
                         <React.Fragment key={products?.id}>
                             <Items>
                                 <ListProducts>
                                     <li>
                                         <span>[{products.amount}x]</span>
-                                        {products?.name}
+                                        <span className="uper">
+                                            {products?.name}
+                                        </span>
                                     </li>
                                 </ListProducts>
 
@@ -39,7 +41,12 @@ const CardPrice: React.FC<DataPriceProps> = ({
                                     <li>
                                         <span>
                                             <sup>R$</sup>
-                                            {products?.price}
+                                            {products?.price?.toLocaleString(
+                                                'pt-BR',
+                                                {
+                                                    minimumFractionDigits: 2,
+                                                }
+                                            )}
                                         </span>
                                     </li>
                                 </ListProducts>
@@ -53,7 +60,7 @@ const CardPrice: React.FC<DataPriceProps> = ({
 
                     <div>
                         <sup>R$</sup>
-                        <span>0</span>
+                        <span>{total}</span>
                     </div>
                 </Total>
                 <div>

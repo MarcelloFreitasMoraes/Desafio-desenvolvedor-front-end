@@ -9,7 +9,7 @@ import { getSliderSettings } from '@/utils/sliderConfig'
 import { Content, Img } from './Slider.styles'
 
 const SliderComponent: React.FC = () => {
-    const showArrows = useWindowResize()
+    const showArrows = useWindowResize(767)
     const settings = getSliderSettings(showArrows)
 
     return (
