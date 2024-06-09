@@ -3,7 +3,11 @@ export interface ListData {
     image: string
     name: string
     price: string
-    amount: number
-    total: string
     id: number
+    delete?: boolean
+}
+
+export interface IMovieCart extends ListData {
+    amount?: number
+    total?: string
 }

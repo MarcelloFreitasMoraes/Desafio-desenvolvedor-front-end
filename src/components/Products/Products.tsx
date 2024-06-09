@@ -39,7 +39,7 @@ const Products: React.FC<ProdutoctsProps> = ({
     return (
         <Content>
             <Grid>
-                <Box key={1}>
+                <Box>
                     <Image src={image} alt={name} width={200} height={200} />
                     <h2>{name}</h2>
                     <p>{description}</p>

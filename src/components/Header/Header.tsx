@@ -17,7 +17,7 @@ const Header: React.FC = () => {
                     <Box>
                         <Link href={'/'}>Home</Link>
                         <Link href={'#'}>Ofertas</Link>
-                        <Link href={'#'}>
+                        <Link href={'/cart'}>
                             <BiCart size={'24px'} />
                         </Link>
                         <Link href={'#'}>

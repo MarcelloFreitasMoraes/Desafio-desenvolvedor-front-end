@@ -7,22 +7,23 @@ import { Container, Loading, Products } from '@/components'
 import { useRouter } from 'next/navigation'
 import useListData from '@/hooks/useListProdutosData'
 import { Fragment } from 'react'
-import { ListData } from '@/hooks/types'
+import { IMovieCart } from '@/hooks/types'
+import useCartData from '@/hooks/useCheckData'
 
 export default function Home() {
     const { push } = useRouter()
     const { ListProductsQuery, LoadingListProducts } = useListData()
+    const { CartMutation } = useCartData()
 
     if (LoadingListProducts) {
         return <Loading />
     }
 
-    let search = 'banana'
+    const search = 'banana'
 
     const resultSearch = () => {
         push(`/resultado-busca?fruta=${search}`)
     }
-    console.log(process.env.NEXT_PUBLIC_IMAGE_DOMAINS)
 
     return (
         <Container>
@@ -34,23 +35,32 @@ export default function Home() {
                 />
             </Content>
             <SliderComponent />
+
             <ContainerCard>
                 {ListProductsQuery &&
-                    Object.entries(ListProductsQuery)?.map(
-                        ([_, productsArray]) => {
-                            console.log(productsArray, 'productsArray')
-                            return productsArray.map((product: ListData) => (
-                                <Fragment key={`${product.id}`}>
-                                    <Products
-                                        image={product?.image}
-                                        name={product?.name}
-                                        description={product?.description}
-                                        price={product?.price}
-                                        onClick={() => {}}
-                                    />
-                                </Fragment>
-                            ))
-                        }
+                    Object.entries(ListProductsQuery).map(
+                        ([_, productsArray]) =>
+                            productsArray.map((product: IMovieCart) => {
+                                const amount = product.amount ?? 0
+                                return (
+                                    <Fragment key={product.id}>
+                                        <Products
+                                            image={product.image || ''}
+                                            name={product.name || ''}
+                                            description={
+                                                product.description || ''
+                                            }
+                                            price={product.price || ''}
+                                            onClick={() =>
+                                                CartMutation.mutate({
+                                                    ...product,
+                                                    amount: amount + 1,
+                                                })
+                                            }
+                                        />
+                                    </Fragment>
+                                )
+                            })
                     )}
             </ContainerCard>
         </Container>
