@@ -5,7 +5,7 @@ import { Carrossel, ContainerCard, Content } from './styles'
 import SliderComponent from '@/components/Slider/Slider'
 import { Container, Loading, Products } from '@/components'
 import useListData from '@/hooks/useListProdutosData'
-import { Fragment, SetStateAction, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { IMovieCart } from '@/hooks/types'
 import useCartData from '@/hooks/useCheckData'
 
@@ -13,6 +13,14 @@ export default function Home() {
     const { ListProductsQuery, LoadingListProducts } = useListData()
     const { CartMutation, ModalOpen, SetOpen } = useCartData()
     const [value, setValue] = useState<string>('')
+    const isLogged =
+        typeof localStorage !== 'undefined'
+            ? localStorage.getItem('Logged')
+            : null
+
+    if (typeof window !== 'undefined') {
+        document.title = 'Mercado Fruta | Início'
+    }
 
     if (LoadingListProducts) {
         return <Loading />
@@ -52,6 +60,9 @@ export default function Home() {
                                                         ...product,
                                                     })
                                                 }
+                                                check={ModalOpen}
+                                                setCheck={SetOpen}
+                                                isLogged={isLogged}
                                             />
                                         </Fragment>
                                     )

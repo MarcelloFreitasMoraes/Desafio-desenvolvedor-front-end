@@ -24,3 +24,16 @@ export const Box = styled.div`
     gap: 20px;
     color: ${(props) => props.theme.colors.white};
 `
+export const Icons = styled.div`
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    button,
+    a {
+        cursor: pointer;
+        color: ${(props) => props.theme.colors.white};
+        background-color: transparent;
+    }
+`

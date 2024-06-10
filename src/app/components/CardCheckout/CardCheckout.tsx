@@ -19,10 +19,15 @@ import { IMovieCart } from '@/hooks/types'
 import TypographicComponent from '@/components/Typographic/Typographic'
 import { Loading } from '@/components'
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai'
+import Alert from '@/components/Alert'
 
 const CardCheckout: React.FC<DataProps> = ({ data }) => {
     const { CartMutation, LoadingCart } = useCartData()
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
+    const [alert, setAlert] = useState<{
+        type: 'error'
+        message: string
+    } | null>(null)
 
     if (isDeleting || LoadingCart) {
         return <Loading />
@@ -38,7 +43,13 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
                 delete: true,
             },
             {
-                onSettled: () => setIsDeleting(false),
+                onSettled: () => {
+                    setIsDeleting(false)
+                    setAlert({
+                        type: 'error',
+                        message: 'Removido com sucesso!',
+                    })
+                },
             }
         )
     }
@@ -147,12 +158,12 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
                         }
                     )}
             </Wrapper>
-
             <CardPrice
                 data={data}
                 total={totalSun}
                 setIsDeleting={setIsDeleting}
             />
+            {alert && <Alert type={alert.type} message={alert.message} />}
         </Grid>
     )
 }

@@ -15,6 +15,7 @@ const Products: React.FC<ProdutoctsProps> = ({
     onClick,
     setCheck,
     check,
+    isLogged,
 }) => {
     return (
         <Content>
@@ -32,18 +33,12 @@ const Products: React.FC<ProdutoctsProps> = ({
                             supTitle="R$"
                         />
                     </Pricing>
-
-                    {/* {isLogged ? ( */}
-                    <Button onClick={onClick}>Adicionar ao Carrinho</Button>
-                    {/* ) : (
-                                    <Button
-                                        label="Logue para comprar"
-                                        disabled
-                                    />
-                                )} */}
+                    {isLogged ? (
+                        <Button onClick={onClick}>Adicionar ao Carrinho</Button>
+                    ) : (
+                        <Button disabled>Logue para comprar</Button>
+                    )}
                 </Box>
-                {/* )
-                    )} */}
             </Grid>
             <Modal check={check} setCheck={setCheck} />
         </Content>

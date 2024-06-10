@@ -6,10 +6,11 @@ import { BaseLayoutrProps } from './types'
 import { ContainerChildren } from './BaseLayout.styles'
 import Footer from '../Footer/Footer'
 
-const BaseLayout: React.FC<BaseLayoutrProps> = ({ children }) => {
+const BaseLayout: React.FC<BaseLayoutrProps> = ({ children, isLogged }) => {
+    const loggedInUser = isLogged ?? ''
     return (
         <>
-            <Header />
+            <Header isLogged={loggedInUser} />
             <ContainerChildren>{children}</ContainerChildren>
             <Footer />
         </>

@@ -15,11 +15,18 @@ const SearchResult: React.FC = () => {
     const searchParams = useSearchParams()
     const fruta = searchParams.get('fruta')?.toLowerCase() || ''
     const { ListProductsQuery, LoadingListProducts } = useListData()
-    const { CartMutation } = useCartData()
+    const { CartMutation, ModalOpen, SetOpen } = useCartData()
     const [searchValue, setSearchValue] = useState<string>('')
     const [filterValue, setFilterValue] = useState<string>(fruta)
     const showArrows = useWindowResize(768, true)
+    const isLogged =
+        typeof localStorage !== 'undefined'
+            ? localStorage.getItem('Logged')
+            : null
     const Image = showArrows ? Mobile : Logo
+    if (typeof window !== 'undefined') {
+        document.title = 'Mercado Fruta | Início'
+    }
 
     useEffect(() => {
         if (fruta) {
@@ -67,6 +74,9 @@ const SearchResult: React.FC = () => {
                                                 ...product,
                                             })
                                         }
+                                        check={ModalOpen}
+                                        setCheck={SetOpen}
+                                        isLogged={isLogged}
                                     />
                                 </Fragment>
                             )

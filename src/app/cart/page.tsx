@@ -15,6 +15,10 @@ const Cart: React.FC = () => {
     const showArrows = useWindowResize(768, true)
     const Image = showArrows ? Mobile : Logo
 
+    if (typeof window !== 'undefined') {
+        document.title = 'Mercado Fruta | Carrinho'
+    }
+
     if (LoadingCart) {
         return <Loading />
     }
