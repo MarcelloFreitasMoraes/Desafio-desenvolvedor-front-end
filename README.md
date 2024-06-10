@@ -37,7 +37,8 @@ A aplicação consiste em 2 paginas:
  ```bash
  
  #executar o projeto
- 1 - npm dev
+ 1 - npm install
+ 2 - npm dev
  ```
  ## Fotos do Projeto
 
