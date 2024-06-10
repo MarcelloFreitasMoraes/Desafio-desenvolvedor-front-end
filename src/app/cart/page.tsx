@@ -21,8 +21,8 @@ const Cart: React.FC = () => {
 
     return (
         <Container>
-            {CartQuery?.data && Object.keys(CartQuery.data).length > 0 ? (
-                <CardCheckout data={CartQuery?.data} />
+            {CartQuery && Object.keys(CartQuery).length > 0 ? (
+                <CardCheckout data={CartQuery} />
             ) : (
                 <Empty
                     image={Image}

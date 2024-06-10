@@ -54,7 +54,7 @@ const CardPrice: React.FC<DataPriceProps> = ({
                                     <ListProducts>
                                         <li>
                                             <span>
-                                                [{products.amount ?? 0}x]
+                                                [{products?.amount ?? 0}x]
                                             </span>
                                             <span className="uper">
                                                 {products?.name ??
@@ -81,22 +81,17 @@ const CardPrice: React.FC<DataPriceProps> = ({
 
             <Finish>
                 <Total>
-                    {/* <HeadingPrice> */}
                     <TypographicComponent
                         regular
                         title={'Total'}
                         weight="bold"
                     />
-                    {/* </HeadingPrice> */}
-
-                    {/* <div> */}
                     <TypographicComponent
                         regular
                         supTitle="R$"
                         title={total}
                         weight="bold"
                     />
-                    {/* </div> */}
                 </Total>
                 <Button disabled={LoadingCart} onClick={handleButtonClick}>
                     Finalizar Compra

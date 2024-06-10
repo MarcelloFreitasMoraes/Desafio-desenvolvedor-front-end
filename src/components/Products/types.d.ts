@@ -6,6 +6,4 @@ export interface ProdutoctsProps {
     description: string
     price: number | string
     onClick: () => void
-    check: boolean
-    setCheck: React.Dispatch<React.SetStateAction<boolean>>
 }

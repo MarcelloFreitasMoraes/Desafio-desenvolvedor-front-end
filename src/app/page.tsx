@@ -11,7 +11,7 @@ import useCartData from '@/hooks/useCheckData'
 
 export default function Home() {
     const { ListProductsQuery, LoadingListProducts } = useListData()
-    const { CartMutation, ModalOpen, SetOpen, LoadingCart } = useCartData()
+    const { CartMutation, ModalOpen, SetOpen } = useCartData()
     const [value, setValue] = useState<string>('')
 
     if (LoadingListProducts) {
@@ -52,8 +52,6 @@ export default function Home() {
                                                         ...product,
                                                     })
                                                 }
-                                                check={ModalOpen}
-                                                setCheck={SetOpen}
                                             />
                                         </Fragment>
                                     )

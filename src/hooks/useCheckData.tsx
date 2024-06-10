@@ -2,71 +2,53 @@
 
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { IMovieCart } from './types'
-import { http } from '@/config/http'
-import stale from '@/utils/stale'
 import { useState } from 'react'
+import { CartService } from '@/service/useServiceData'
+
+const cartService = new CartService()
 
 export default function useCartData() {
     const [open, setOpen] = useState<boolean>(false)
-    const query = useQuery<IMovieCart | undefined>(
-        [['cartMovies']],
-        () =>
-            http
-                .get('/frutas/checkout.json')
-                .then((res) => {
-                    return res?.data || {}
-                })
-                .catch((error) => {
-                    setOpen(false)
-                    console.log(error)
-                }),
-        {
-            staleTime: stale.never,
-            cacheTime: 0,
-            enabled: true,
-        }
-    )
+    const {
+        data: products,
+        isLoading,
+        refetch,
+    } = useQuery<IMovieCart>({
+        queryKey: ['cartMovies'],
+        queryFn: cartService.fetchAllCartMovies,
+    })
+
     const mutation = useMutation(
         async (values: { key?: string; delete?: boolean } & IMovieCart) => {
-            const { key, decrement, ...restValues } = values
-            const existingEntries = query.data ? Object.entries(query.data) : []
+            const { key, decrement = false, ...restValues } = values
+            const existingEntries = products ? Object.entries(products) : []
             const existingEntry = existingEntries.find(
                 ([_, item]) => item.id === values.id
             )
 
-            if (restValues.delete) {
-                return http.delete(`/frutas/checkout/${key}.json`)
-            } else {
-                if (existingEntry) {
-                    const [entryKey, existingItem] = existingEntry
-                    const currentAmount = existingItem?.amount
-                    const newAmount = decrement
-                        ? currentAmount - 1
-                        : currentAmount + 1
-
-                    if (newAmount === 0) {
-                        return http.delete(`/frutas/checkout/${entryKey}.json`)
-                    }
-                    const updatedValues = {
-                        ...restValues,
-                        amount: newAmount,
-                        total: (
-                            parseFloat(existingItem.price) * newAmount
-                        ).toFixed(2),
-                    }
-                    return http.put(
-                        `/frutas/checkout/${entryKey}.json`,
-                        updatedValues
-                    )
-                } else {
-                    const body = { ...restValues, amount: 1 }
-                    return http.post(`/frutas/checkout.json`, body)
-                }
+            const operations = {
+                delete: () => cartService.removeMovieFromCart(key!),
+                update: () =>
+                    existingEntry
+                        ? cartService.updateMovieInCart(
+                              existingEntry[0],
+                              existingEntry[1],
+                              restValues,
+                              decrement
+                          )
+                        : Promise.reject(new Error('Entry not found')),
+                create: () => cartService.addMovieToCart(restValues),
             }
+
+            return restValues.delete
+                ? operations.delete()
+                : existingEntry
+                ? operations.update()
+                : operations.create()
         },
         {
             onSuccess: () => {
-                query.refetch()
+                refetch()
                 setOpen(true)
             },
             onError: () => {
@@ -74,28 +56,19 @@ export default function useCartData() {
             },
         }
     )
-    const handleDeleteAll = async () => {
-        const existingEntries = query.data ? Object.entries(query.data) : []
-        const itemKeys = existingEntries.map(([key]) => key)
 
-        try {
-            await Promise.all(
-                itemKeys.map((key) =>
-                    http.delete(`/frutas/checkout/${key}.json`)
-                )
-            )
-            query.refetch()
-        } catch (error) {
-            console.error(error)
+    const deleteAll = async () => {
+        if (products) {
+            await cartService.finalizePurchase(products, refetch)
         }
     }
 
     return {
-        CartQuery: query,
-        LoadingCart: query.isLoading || mutation.isLoading,
+        CartQuery: products,
+        LoadingCart: isLoading || mutation.isLoading,
         CartMutation: mutation,
         ModalOpen: open,
         SetOpen: setOpen,
-        DeleteAll: handleDeleteAll,
+        DeleteAll: deleteAll,
     }
 }

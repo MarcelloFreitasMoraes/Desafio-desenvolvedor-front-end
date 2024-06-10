@@ -45,7 +45,7 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
     const total =
         data &&
         Object.values(data)?.reduce(
-            (sum, item) => sum + parseFloat(item.total),
+            (sum, item) => sum + parseFloat(item?.total),
             0
         )
     const totalSun = total?.toLocaleString('pt-BR', {
