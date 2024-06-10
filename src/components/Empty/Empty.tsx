@@ -12,12 +12,7 @@ const Empty: React.FC<EmptyProps> = ({ image, title }) => {
     const { push } = useRouter()
     return (
         <Container>
-            <TypographicComponent
-                large
-                primary={'true'}
-                title={title}
-                weight="bold"
-            />
+            <TypographicComponent large title={title} weight="bold" />
             <ImageBox>
                 <Image src={image} layout="fill" alt="reload" />
             </ImageBox>

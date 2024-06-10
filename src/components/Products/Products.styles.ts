@@ -24,7 +24,8 @@ export const Grid = styled.div`
 export const Box = styled.div`
     width: 100%;
     height: auto;
-
+    padding-left: 5px;
+    padding-right: 5px;
     text-align: center;
     background-color: ${(props) => props.theme.colors.white};
     border-radius: 10px;
@@ -35,12 +36,12 @@ export const Box = styled.div`
         margin-bottom: 10px;
     }
 
-    h2::first-letter {
-        text-transform: uppercase;
-    }
-
     p {
         margin: 10px 0;
+    }
+
+    p::first-letter {
+        text-transform: capitalize;
     }
 
     @media screen and (max-width: 768px) {

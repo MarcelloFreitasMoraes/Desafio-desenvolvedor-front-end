@@ -1,15 +1,13 @@
 'use client'
 
 import React from 'react'
-import { Background } from './Loading.styled'
-import Image from 'next/image'
-import loadingGif from '../../../public/loading.gif'
+import { Box, Spinner } from './Loading.styled'
 
-const Loading: React.FC = () => {
+const Loading: React.FC<{ size?: number }> = ({ size = 75 }) => {
     return (
-        <Background>
-            <Image src={loadingGif} width={300} height={300} alt="Loading..." />
-        </Background>
+        <Box>
+            <Spinner size={size} />
+        </Box>
     )
 }
 

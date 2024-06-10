@@ -6,6 +6,7 @@ export interface IcontentProps {
     description?: boolean
     title: string
     primary?: string
+    supTitle?: string
     weight?: 'light' | 'normal' | 'semi-bold' | 'bold'
 }
 

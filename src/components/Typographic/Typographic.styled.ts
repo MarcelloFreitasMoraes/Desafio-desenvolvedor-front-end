@@ -5,7 +5,7 @@ import { IPrimaryColorProps } from './types'
 
 const baseStyles = css<IPrimaryColorProps>`
     color: ${(props) =>
-        props.primary ? props.theme.colors.text : props.theme.colors.white};
+        props.primary ? props.theme.colors.textLight : props.theme.colors.text};
     font-weight: ${(props) => {
         switch (props.weight) {
             case 'light':
@@ -20,6 +20,13 @@ const baseStyles = css<IPrimaryColorProps>`
                 return 400
         }
     }};
+
+    sup {
+        color: ${(props) =>
+            props.primary
+                ? props.theme.colors.textLight
+                : props.theme.colors.text};
+    }
 `
 
 const Text = styled.p<IPrimaryColorProps>`

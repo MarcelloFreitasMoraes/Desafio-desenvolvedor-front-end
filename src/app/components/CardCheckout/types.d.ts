@@ -7,6 +7,6 @@ export interface DataProps {
 
 export interface DataPriceProps {
     data: ListData | undefined
-    fruitsSelected: any
     total: string
+    setIsDeleting: React.Dispatch<React.SetStateAction<boolean>>
 }

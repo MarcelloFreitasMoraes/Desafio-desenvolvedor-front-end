@@ -6,5 +6,6 @@ export interface ProdutoctsProps {
     description: string
     price: number | string
     onClick: () => void
-    // isLogged: boolean
+    check: boolean
+    setCheck: React.Dispatch<React.SetStateAction<boolean>>
 }

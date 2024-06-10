@@ -5,6 +5,7 @@ export interface ListData {
     price?: number
     id?: number
     delete?: boolean
+    decrement?: boolean
 }
 
 export interface IMovieCart extends ListData {

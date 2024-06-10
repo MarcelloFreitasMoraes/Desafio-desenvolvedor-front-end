@@ -21,12 +21,6 @@ const SearchResult: React.FC = () => {
     const showArrows = useWindowResize(768, true)
     const Image = showArrows ? Mobile : Logo
 
-    // useEffect(() => {
-    //     if (fruta) {
-    //         setValue(fruta)
-    //     }
-    // }, [fruta])
-
     useEffect(() => {
         if (fruta) {
             setFilterValue(fruta)

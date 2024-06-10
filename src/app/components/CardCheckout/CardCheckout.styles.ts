@@ -59,10 +59,6 @@ export const Detail = styled.div`
     height: 100%;
     width: 100%;
 
-    button:hover {
-        background-color: ${(props) => props.theme.hoverPrimary};
-    }
-
     @media screen and (max-width: 768px) {
         padding-top: 40px;
     }
@@ -71,20 +67,14 @@ export const Detail = styled.div`
 export const Heading = styled.div`
     margin-bottom: 10px;
 
-    h1 {
-        text-align: center;
-
-        @media screen and (max-width: 768px) {
-            font-size: 1.5rem;
-        }
-    }
-
-    h2 {
+    > p:first-child {
         text-transform: capitalize;
-        font-weight: bold;
-        color: ${(props) => props.theme.secondary};
         margin-bottom: 10px;
     }
+`
+export const HeadingPrice = styled.div`
+    margin-bottom: 10px;
+    text-align: center;
 `
 
 export const Price = styled.span`
@@ -108,7 +98,6 @@ export const Buttons = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 20%;
     position: absolute;
     bottom: 10px;
     right: 50px;
@@ -133,11 +122,25 @@ export const Buttons = styled.div`
         padding: 0 5px;
     }
 
+    div {
+        margin: 0 5px;
+    }
+
     @media screen and (max-width: 600px) {
         position: relative;
         left: 5px;
     }
 `
+
+export const Input = styled.input`
+    width: 62px;
+    height: 26px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    background-color: ${(props) => props.theme.colors.white};
+    text-align: center;
+`
+
 export const Aside = styled.aside`
     background-color: ${(props) => props.theme.colors.white};
     width: 50%;

@@ -1,6 +1,8 @@
 'use client'
 
+import Modal from '@/app/components/Modal/Modal'
 import Button from '../Button/Button'
+import TypographicComponent from '../Typographic/Typographic'
 import { Box, Content, Grid, Pricing } from './Products.styles'
 import { ProdutoctsProps } from './types'
 import Image from 'next/image'
@@ -11,40 +13,24 @@ const Products: React.FC<ProdutoctsProps> = ({
     description,
     price,
     onClick,
+    setCheck,
+    check,
 }) => {
-    // const [check, setCheck] = useState<boolean>(false)
-
-    // const openChecked = () => {
-    //     setCheck((prev) => !prev)
-    // }
-
-    // const addCheckout = (data: {
-    //     name: string
-    //     image: string
-    //     description: string
-    //     price: string
-    // }) => {
-    //     axios.post(CHECK, data)
-    //     .then((res) => {
-    //       openChecked()
-    //     })
-    //     .catch((error) => {
-    //       alert('Ocorreu um erro ao adicionar o item ao carrinho.')
-    //       console.error(error)
-    //     })
-
-    // }
     return (
         <Content>
             <Grid>
                 <Box>
                     <Image src={image} alt={name} width={200} height={200} />
-                    <h2>{name}</h2>
-                    <p>{description}</p>
+                    <TypographicComponent large title={name} weight="bold" />
+                    <TypographicComponent regular title={description} />
 
                     <Pricing>
-                        <sup>R$</sup>
-                        <span>{price}</span>
+                        <TypographicComponent
+                            large
+                            title={price as string}
+                            weight="bold"
+                            supTitle="R$"
+                        />
                     </Pricing>
 
                     {/* {isLogged ? ( */}
@@ -59,7 +45,7 @@ const Products: React.FC<ProdutoctsProps> = ({
                 {/* )
                     )} */}
             </Grid>
-            {/* <Checked check={check} setCheck={setCheck} /> */}
+            <Modal check={check} setCheck={setCheck} />
         </Content>
     )
 }

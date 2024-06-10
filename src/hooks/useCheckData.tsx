@@ -4,25 +4,31 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { IMovieCart } from './types'
 import { http } from '@/config/http'
 import stale from '@/utils/stale'
+import { useState } from 'react'
 
-export default function useCartData(key?: string | string[] | undefined) {
+export default function useCartData() {
+    const [open, setOpen] = useState<boolean>(false)
     const query = useQuery<IMovieCart | undefined>(
-        [['cartMovies'], key],
+        [['cartMovies']],
         () =>
             http
-                .get(`/frutas/checkout.json`)
-                .then((res) => res?.data || {})
-                .catch((error) => console.log(error)),
+                .get('/frutas/checkout.json')
+                .then((res) => {
+                    return res?.data || {}
+                })
+                .catch((error) => {
+                    setOpen(false)
+                    console.log(error)
+                }),
         {
             staleTime: stale.never,
             cacheTime: 0,
             enabled: true,
         }
     )
-
     const mutation = useMutation(
-        (values: { key?: string; delete?: boolean } & IMovieCart) => {
-            const { key, ...restValues } = values
+        async (values: { key?: string; delete?: boolean } & IMovieCart) => {
+            const { key, decrement, ...restValues } = values
             const existingEntries = query.data ? Object.entries(query.data) : []
             const existingEntry = existingEntries.find(
                 ([_, item]) => item.id === values.id
@@ -33,12 +39,19 @@ export default function useCartData(key?: string | string[] | undefined) {
             } else {
                 if (existingEntry) {
                     const [entryKey, existingItem] = existingEntry
+                    const currentAmount = existingItem?.amount
+                    const newAmount = decrement
+                        ? currentAmount - 1
+                        : currentAmount + 1
+
+                    if (newAmount === 0) {
+                        return http.delete(`/frutas/checkout/${entryKey}.json`)
+                    }
                     const updatedValues = {
                         ...restValues,
-                        amount: existingItem.amount + 1,
+                        amount: newAmount,
                         total: (
-                            parseFloat(existingItem.price) *
-                            (existingItem.amount + 1)
+                            parseFloat(existingItem.price) * newAmount
                         ).toFixed(2),
                     }
                     return http.put(
@@ -54,13 +67,35 @@ export default function useCartData(key?: string | string[] | undefined) {
         {
             onSuccess: () => {
                 query.refetch()
+                setOpen(true)
+            },
+            onError: () => {
+                setOpen(false)
             },
         }
     )
+    const handleDeleteAll = async () => {
+        const existingEntries = query.data ? Object.entries(query.data) : []
+        const itemKeys = existingEntries.map(([key]) => key)
+
+        try {
+            await Promise.all(
+                itemKeys.map((key) =>
+                    http.delete(`/frutas/checkout/${key}.json`)
+                )
+            )
+            query.refetch()
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     return {
         CartQuery: query,
         LoadingCart: query.isLoading || mutation.isLoading,
         CartMutation: mutation,
+        ModalOpen: open,
+        SetOpen: setOpen,
+        DeleteAll: handleDeleteAll,
     }
 }
