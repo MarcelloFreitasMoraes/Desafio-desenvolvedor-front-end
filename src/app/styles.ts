@@ -5,6 +5,11 @@ import styled from 'styled-components'
 export const Content = styled.div`
     padding-bottom: 20px;
 `
+export const Carrossel = styled.div`
+    @media screen and (max-width: 575px) {
+        display: none;
+    }
+`
 
 export const ContainerCard = styled.div`
     display: grid;
@@ -18,7 +23,7 @@ export const ContainerCard = styled.div`
     @media screen and (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
     }
-    @media screen and (max-width: 475px) {
+    @media screen and (max-width: 575px) {
         grid-template-columns: repeat(1, 1fr);
     }
 `

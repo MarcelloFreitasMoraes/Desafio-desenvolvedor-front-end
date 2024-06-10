@@ -20,12 +20,12 @@ export const Container = styled.div`
 `
 export const ImageBox = styled.div`
     position: relative;
-    width: 60%;
-    height: 70%;
+    width: 433px;
+    height: 350px;
 
     img {
-        width: 447px;
-        height: 265px;
+        width: 100%;
+        height: auto;
 
         @media screen and (max-width: 768px) {
             width: 100% !important;
@@ -34,6 +34,7 @@ export const ImageBox = styled.div`
     }
 
     @media screen and (max-width: 768px) {
-        height: 35%;
+        width: 150px;
+        height: 200px;
     }
 `

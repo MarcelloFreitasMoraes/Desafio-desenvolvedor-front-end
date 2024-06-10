@@ -48,6 +48,7 @@ export const Product = styled.div`
 
         img {
             width: 100%;
+            height: auto;
         }
     }
 `
@@ -128,7 +129,9 @@ export const Buttons = styled.div`
 
     @media screen and (max-width: 600px) {
         position: relative;
-        left: 5px;
+        align-items: center;
+        right: 0;
+        justify-content: center;
     }
 `
 

@@ -1,7 +1,7 @@
 'use client'
 
 import Search from '@/components/Search/Search'
-import { ContainerCard, Content } from './styles'
+import { Carrossel, ContainerCard, Content } from './styles'
 import SliderComponent from '@/components/Slider/Slider'
 import { Container, Loading, Products } from '@/components'
 import useListData from '@/hooks/useListProdutosData'
@@ -23,7 +23,9 @@ export default function Home() {
             <Content>
                 <Search search={value} setSearch={setValue} />
             </Content>
-            <SliderComponent />
+            <Carrossel>
+                <SliderComponent />
+            </Carrossel>
 
             <ContainerCard>
                 {ListProductsQuery &&
