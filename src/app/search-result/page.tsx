@@ -1,5 +1,4 @@
-'use client'
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import useListData from '@/hooks/useListProdutosData'
 import useCartData from '@/hooks/useCheckData'
@@ -53,42 +52,46 @@ const SearchResult: React.FC = () => {
             <Content>
                 <Search search={searchValue} setSearch={setSearchValue} />
             </Content>
-            {filteredProducts.length > 0 ? (
-                <ContainerCard>
-                    {filteredProducts.map(
-                        (product: IMovieCart, index: number) => {
-                            const totalSun =
-                                product.price?.toLocaleString('pt-BR', {
-                                    minimumFractionDigits: 2,
-                                }) ?? 0
+            <Suspense fallback={<Loading />}>
+                {filteredProducts.length > 0 ? (
+                    <ContainerCard>
+                        {filteredProducts.map(
+                            (product: IMovieCart, index: number) => {
+                                const totalSun =
+                                    product.price?.toLocaleString('pt-BR', {
+                                        minimumFractionDigits: 2,
+                                    }) ?? 0
 
-                            return (
-                                <Fragment key={`product_${index}`}>
-                                    <Products
-                                        image={product.image || ''}
-                                        name={product.name || ''}
-                                        description={product.description || ''}
-                                        price={totalSun}
-                                        onClick={() =>
-                                            CartMutation.mutate({
-                                                ...product,
-                                            })
-                                        }
-                                        check={ModalOpen}
-                                        setCheck={SetOpen}
-                                        isLogged={isLogged}
-                                    />
-                                </Fragment>
-                            )
-                        }
-                    )}
-                </ContainerCard>
-            ) : (
-                <Empty
-                    image={Image}
-                    title="Parece que não há nada por aqui :("
-                />
-            )}
+                                return (
+                                    <Fragment key={`product_${index}`}>
+                                        <Products
+                                            image={product.image || ''}
+                                            name={product.name || ''}
+                                            description={
+                                                product.description || ''
+                                            }
+                                            price={totalSun}
+                                            onClick={() =>
+                                                CartMutation.mutate({
+                                                    ...product,
+                                                })
+                                            }
+                                            check={ModalOpen}
+                                            setCheck={SetOpen}
+                                            isLogged={isLogged}
+                                        />
+                                    </Fragment>
+                                )
+                            }
+                        )}
+                    </ContainerCard>
+                ) : (
+                    <Empty
+                        image={Image}
+                        title="Parece que não há nada por aqui :("
+                    />
+                )}
+            </Suspense>
         </Container>
     )
 }
