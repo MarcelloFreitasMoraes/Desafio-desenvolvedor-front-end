@@ -10,7 +10,7 @@ interface Params {
 const SearchResult: React.FC<Params> = (searchParams) => {
     return (
         <Container>
-            <SearchClient fruta={searchParams?.searchParams?.fruta} />
+            <SearchClient fruta={searchParams?.searchParams?.fruta || ''} />
         </Container>
     )
 }
