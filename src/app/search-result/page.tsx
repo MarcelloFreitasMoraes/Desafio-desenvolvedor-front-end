@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useMemo, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import useListData from '@/hooks/useListProdutosData'
