@@ -10,7 +10,7 @@ import { IMovieCart } from '@/hooks/types'
 import useCartData from '@/hooks/useCheckData'
 
 export default function Home() {
-    const { ListProductsQuery, LoadingListProducts } = useListData()
+    const { ListProductsQuery } = useListData()
     const { CartMutation, ModalOpen, SetOpen } = useCartData()
     const [value, setValue] = useState<string>('')
     const isLogged =

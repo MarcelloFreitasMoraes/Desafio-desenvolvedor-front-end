@@ -10,7 +10,7 @@ import { Empty, Loading, Products, Search } from '@/components'
 import { ContainerCard, Content } from '@/app/styles'
 
 const SearchClient: React.FC<{ fruta: string }> = ({ fruta }) => {
-    const { ListProductsQuery, LoadingListProducts } = useListData()
+    const { ListProductsQuery } = useListData()
     const { CartMutation, ModalOpen, SetOpen } = useCartData()
     const [searchValue, setSearchValue] = useState<string>('')
     const [filterValue, setFilterValue] = useState<string>(fruta)
