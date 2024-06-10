@@ -43,6 +43,8 @@ export const Medium = styled(Text)`
 
 export const Regular = styled(Text)<IPrimaryColorProps>`
     font-size: ${(props) => props.theme.fonts.fontSize.regular};
+    color: ${(props) =>
+        props.primary ? props.theme.colors.white : props.theme.colors.text};
 
     @media screen and (max-width: 768px) {
         font-size: ${(props) => props.theme.fonts.fontSize.medium};
