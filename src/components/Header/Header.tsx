@@ -17,6 +17,9 @@ const Header: React.FC<{ isLogged: string | null | undefined }> = ({
     const openModal = () => {
         setShowModal(true)
     }
+    const closedModal = () => {
+        setShowModal(false)
+    }
     return (
         <Content>
             <Container>
@@ -38,7 +41,11 @@ const Header: React.FC<{ isLogged: string | null | undefined }> = ({
                     </Box>
                 </Grid>
             </Container>
-            <ModalLogin showModal={showModal} isLogged={isLogged} />
+            <ModalLogin
+                showModal={showModal}
+                isLogged={isLogged}
+                closeModal={closedModal}
+            />
         </Content>
     )
 }

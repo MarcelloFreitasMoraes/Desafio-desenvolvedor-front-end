@@ -1,4 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react'
+import React, {
+    useState,
+    ChangeEvent,
+    FormEvent,
+    useRef,
+    useEffect,
+} from 'react'
 import { useSpring, animated } from 'react-spring'
 import { ModalProps } from './types'
 import Alert from '@/components/Alert'
@@ -11,40 +17,56 @@ import {
     Login,
     Sair,
 } from './ModalLogin.styles'
-import { authenticateUser } from '@/utils/authenticateUser'
 
-const ModalLogin = ({ showModal, isLogged }: ModalProps) => {
+const ModalLogin = ({ showModal, isLogged, closeModal }: ModalProps) => {
     const [user, setUser] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [alert, setAlert] = useState<{
-        type: 'error'
+        type: 'success' | 'error'
         message: string
     } | null>(null)
-    const [loading, setLoading] = useState<boolean>(false)
+
+    const modalRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                modalRef.current &&
+                !modalRef.current.contains(event.target as Node)
+            ) {
+                closeModal()
+            }
+        }
+
+        if (showModal) {
+            document.addEventListener('mousedown', handleClickOutside)
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [showModal])
 
     const animation = useSpring({
-        config: {
-            duration: 250,
-        },
+        config: { duration: 250 },
         opacity: showModal ? 1 : 0,
         transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
     })
 
-    const handleSignIn = async (e: FormEvent) => {
+    const loggedUser = 'teste@teste.com.br'
+    const nameUser = 'Marcelo Moraes'
+    const loggedPassword = '123456'
+
+    const handleSignIn = (e: FormEvent) => {
         e.preventDefault()
-        setLoading(true)
 
-        try {
-            await authenticateUser(user, password)
-        } catch (error) {
-            if (error instanceof Error) {
-                setAlert({ type: 'error', message: error.message })
-            } else {
-                setAlert({ type: 'error', message: 'Erro desconhecido.' })
-            }
+        if (user === loggedUser && password === loggedPassword) {
+            localStorage.setItem('Logged', 'isLogged')
+            setAlert(null)
+            window.location.href = window.location.href
+        } else {
+            setAlert({ type: 'error', message: 'Usuário não cadastrado' })
         }
-
-        setLoading(false)
     }
 
     const handleSignOut = () => {
@@ -56,15 +78,13 @@ const ModalLogin = ({ showModal, isLogged }: ModalProps) => {
         <>
             {showModal && (
                 <animated.div style={animation}>
-                    <Login>
+                    <Login ref={modalRef}>
                         <Heading>
                             {isLogged ? (
                                 <Logged>
                                     <h3>Bem vindo</h3>
                                     <Sair>
-                                        <div>
-                                            {localStorage.getItem('nameUser')}
-                                        </div>
+                                        <div>{nameUser}</div>
                                         <Button onClick={handleSignOut}>
                                             Sair
                                         </Button>
@@ -101,11 +121,8 @@ const ModalLogin = ({ showModal, isLogged }: ModalProps) => {
                                                 }
                                             />
                                         </div>
-                                        <Button
-                                            onClick={handleSignIn}
-                                            disabled={loading}
-                                        >
-                                            {loading ? 'Entrando...' : 'Entrar'}
+                                        <Button onClick={handleSignIn}>
+                                            Entrar
                                         </Button>
                                     </Entrar>
                                 </Loggouf>
