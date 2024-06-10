@@ -44,14 +44,24 @@ A aplicação consiste em 2 paginas:
 
 <div align="center">
   <p>Home</p>
-<img src="![alt text](image.png)" width="700px" />
-<img src="![alt text](image-1.png)" width="700px" />
+<img src="![image](https://github.com/MarcelloFreitasMoraes/Desafio-desenvolvedor-front-end/assets/101751067/cb671d74-4c8e-40b3-aa57-1318ccb5cc1b)
+" width="700px" />
+<img src="![image](https://github.com/MarcelloFreitasMoraes/Desafio-desenvolvedor-front-end/assets/101751067/db50e110-6513-490f-92ea-34074e73f537)
+" width="700px" />
 </div>
 <br/>
 
 <div align="center">
   <p>Carrinho</p>
-<img src="https://github.com/MarcelloFreitasMoraes/mercado-de-frutas-ts/assets/101751067/63f64daf-14db-4bfc-8816-7787bfa9b0b5" width="700px" />
+<img src="![image](https://github.com/MarcelloFreitasMoraes/Desafio-desenvolvedor-front-end/assets/101751067/4fced47a-91a8-4a83-a803-6d4a1ce29c26)
+" width="700px" />
+</div>
+ <br/>
+ 
+<div align="center">
+  <p>Compra Finalizada</p>
+<img src="![image](https://github.com/MarcelloFreitasMoraes/Desafio-desenvolvedor-front-end/assets/101751067/2a4954ee-7c3c-4c8c-910c-d3e7978bcf64)
+" width="700px" />
 </div>
  <br/>
  
