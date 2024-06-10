@@ -29,7 +29,6 @@ const Header: React.FC<{ isLogged: string | null | undefined }> = ({
                     </Link>
                     <Box>
                         <Link href={'/'}>Início</Link>
-                        <Link href={'#'}>Ofertas</Link>
                         <Link href={'/cart'}>
                             <BiCart size={'24px'} />
                         </Link>
