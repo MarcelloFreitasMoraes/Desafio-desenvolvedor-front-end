@@ -15,6 +15,7 @@ import { IMovieCart } from '@/hooks/types'
 import TypographicComponent from '@/components/Typographic/Typographic'
 import { Button } from '@/components'
 import useCartData from '@/hooks/useCheckData'
+import { useRouter } from 'next/navigation'
 
 const CardPrice: React.FC<DataPriceProps> = ({
     data,
@@ -22,6 +23,7 @@ const CardPrice: React.FC<DataPriceProps> = ({
     setIsDeleting,
 }) => {
     const { DeleteAll, LoadingCart } = useCartData()
+    const { push } = useRouter()
 
     const handleButtonClick = () => {
         setIsDeleting(true)
@@ -30,6 +32,7 @@ const CardPrice: React.FC<DataPriceProps> = ({
             pdfDownloadLink.click()
         }
         DeleteAll()
+        push(`/purchase`)
     }
     return (
         <Aside>
