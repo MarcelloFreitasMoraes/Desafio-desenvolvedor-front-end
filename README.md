@@ -8,7 +8,7 @@ Para fazer login utilize o e-mail: teste@teste.com.br e senha: 123456
 ##Instalando Clone o repositório: git clone https://desafio-desenvolvedor-front-end-s21q.vercel.app/
 
 
-##Execute npm install para instalar dependências de nó: npm
+##Execute npm install para instalar dependências de no: npm
 
 # SOBRE O PROJETO
 O projeto Mercado de Frutas é um projeto Front-End desenvolvido em NEXT.js.
@@ -39,7 +39,7 @@ A aplicação consiste em 2 paginas:
  
  #executar o projeto
  1 - npm install
- 2 - npm dev
+ 2 - npm run dev
  ```
  # autor
  ### Marcelo Moraes
