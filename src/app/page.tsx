@@ -5,7 +5,7 @@ import { Carrossel, ContainerCard, Content } from './styles'
 import SliderComponent from '@/components/Slider/Slider'
 import { Container, Loading, Products } from '@/components'
 import useListData from '@/hooks/useListProdutosData'
-import { Fragment, useState } from 'react'
+import { Fragment, Suspense, useState } from 'react'
 import { IMovieCart } from '@/hooks/types'
 import useCartData from '@/hooks/useCheckData'
 
@@ -22,10 +22,6 @@ export default function Home() {
         document.title = 'Mercado Fruta | Início'
     }
 
-    if (LoadingListProducts) {
-        return <Loading />
-    }
-
     return (
         <Container>
             <Content>
@@ -35,41 +31,47 @@ export default function Home() {
                 <SliderComponent />
             </Carrossel>
 
-            <ContainerCard>
-                {ListProductsQuery &&
-                    Object.entries(ListProductsQuery).map(
-                        ([_, productsArray]) =>
-                            productsArray.map(
-                                (product: IMovieCart, index: number) => {
-                                    const totalSun =
-                                        product.price?.toLocaleString('pt-BR', {
-                                            minimumFractionDigits: 2,
-                                        }) ?? '0,00'
+            <Suspense fallback={<Loading />}>
+                <ContainerCard>
+                    {ListProductsQuery &&
+                        Object.entries(ListProductsQuery).map(
+                            ([_, productsArray]) =>
+                                productsArray.map(
+                                    (product: IMovieCart, index: number) => {
+                                        const totalSun =
+                                            product.price?.toLocaleString(
+                                                'pt-BR',
+                                                {
+                                                    minimumFractionDigits: 2,
+                                                }
+                                            ) ?? '0,00'
 
-                                    return (
-                                        <Fragment key={`product_${index}`}>
-                                            <Products
-                                                image={product.image || ''}
-                                                name={product.name || ''}
-                                                description={
-                                                    product.description || ''
-                                                }
-                                                price={totalSun}
-                                                onClick={() =>
-                                                    CartMutation.mutate({
-                                                        ...product,
-                                                    })
-                                                }
-                                                check={ModalOpen}
-                                                setCheck={SetOpen}
-                                                isLogged={isLogged}
-                                            />
-                                        </Fragment>
-                                    )
-                                }
-                            )
-                    )}
-            </ContainerCard>
+                                        return (
+                                            <Fragment key={`product_${index}`}>
+                                                <Products
+                                                    image={product.image || ''}
+                                                    name={product.name || ''}
+                                                    description={
+                                                        product.description ||
+                                                        ''
+                                                    }
+                                                    price={totalSun}
+                                                    onClick={() =>
+                                                        CartMutation.mutate({
+                                                            ...product,
+                                                        })
+                                                    }
+                                                    check={ModalOpen}
+                                                    setCheck={SetOpen}
+                                                    isLogged={isLogged}
+                                                />
+                                            </Fragment>
+                                        )
+                                    }
+                                )
+                        )}
+                </ContainerCard>
+            </Suspense>
         </Container>
     )
 }
