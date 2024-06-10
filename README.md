@@ -1,17 +1,13 @@
 # Mercado-Fruta
 
- ## Sign In
- To login use the email: teste@teste.com.br and password: 123456
+ Entrar
+Para fazer login utilize o e-mail: teste@teste.com.br e senha: 123456
 
-##Getting Started
-The project runs on Node, React (with Next.js) and Styled Components.
+##Introdução O projeto é executado em Node, React (com Next.js) e Styled Components.
 
-##Installing
-Clone the repository:
-git clone https://github.com/MarcelloFreitasMoraes/mercado-de-fruta.git
+##Instalando Clone o repositório: git clone https://github.com/MarcelloFreitasMoraes/mercado-de-fruta.git
 
-##Run npm install to install node dependencies:
-npm
+##Execute npm install para instalar dependências de nó: npm
 
 # SOBRE O PROJETO
 O projeto Mercado de Frutas é um projeto Front-End desenvolvido em NEXT.js.
