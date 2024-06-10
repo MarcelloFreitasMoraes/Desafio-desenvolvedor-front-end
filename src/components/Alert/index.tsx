@@ -17,7 +17,7 @@ const ModalLogin: React.FC<AlertProps> = ({ type, message }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowAlert(false)
-        }, 5000)
+        }, 3000)
 
         return () => {
             clearTimeout(timer)

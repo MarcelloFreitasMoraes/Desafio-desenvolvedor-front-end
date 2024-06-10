@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import Image from 'next/image'
 import {
@@ -25,7 +26,7 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
     const { CartMutation, LoadingCart } = useCartData()
     const [isDeleting, setIsDeleting] = useState<boolean>(false)
     const [alert, setAlert] = useState<{
-        type: 'error'
+        type: 'success' | 'error'
         message: string
     } | null>(null)
 
@@ -45,10 +46,6 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
             {
                 onSettled: () => {
                     setIsDeleting(false)
-                    setAlert({
-                        type: 'error',
-                        message: 'Removido com sucesso!',
-                    })
                 },
             }
         )
@@ -113,13 +110,18 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
                                         <Buttons>
                                             <span>Quantidade:</span>
                                             <div
-                                                onClick={() =>
+                                                onClick={() => {
                                                     CartMutation.mutate({
                                                         key,
                                                         ...fruit,
                                                         decrement: true,
                                                     })
-                                                }
+                                                    setAlert({
+                                                        type: 'error',
+                                                        message:
+                                                            'Item removido com sucesso!',
+                                                    })
+                                                }}
                                             >
                                                 <AiOutlineMinusCircle
                                                     size={16}
@@ -132,22 +134,32 @@ const CardCheckout: React.FC<DataProps> = ({ data }) => {
                                             />
 
                                             <div
-                                                onClick={() =>
+                                                onClick={() => {
                                                     CartMutation.mutate({
                                                         key,
                                                         ...fruit,
                                                         decrement: false,
                                                     })
-                                                }
+                                                    setAlert({
+                                                        type: 'success',
+                                                        message:
+                                                            'Item adicionado com sucesso!',
+                                                    })
+                                                }}
                                             >
                                                 <AiOutlinePlusCircle
                                                     size={16}
                                                 />
                                             </div>
                                             <div
-                                                onClick={() =>
+                                                onClick={() => {
                                                     handleDelete(key, fruit)
-                                                }
+                                                    setAlert({
+                                                        type: 'error',
+                                                        message:
+                                                            'Item removido com sucesso!',
+                                                    })
+                                                }}
                                             >
                                                 <FaTrash size={16} />
                                             </div>
