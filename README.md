@@ -5,7 +5,7 @@ Para fazer login utilize o e-mail: teste@teste.com.br e senha: 123456
 
 ##Introdução O projeto é executado em Node, React (com Next.js) e Styled Components.
 
-##Instalando Clone o repositório: git clone https://desafio-desenvolvedor-front-end-s21q.vercel.app/
+##Instalando Clone o repositório: git clone https://github.com/MarcelloFreitasMoraes/Desafio-desenvolvedor-front-end.git
 
 
 ##Execute npm install para instalar dependências de no: npm
